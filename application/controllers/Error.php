@@ -21,12 +21,13 @@ class ErrorController extends \Yaf\Controller_Abstract {
 				//输出404
 				header(getHttpStatusCode(404));
 				echo '404';
+				//dump($exception->getTrace());
 				exit();
 				break;
 			default :
+				// dump($exception->getTrace());
 				break;
 		}
 		throw $exception;
 	}
-
 }

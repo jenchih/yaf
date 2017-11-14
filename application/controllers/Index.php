@@ -1,4 +1,5 @@
 <?php
+use think\Db;
 class IndexController extends \Yaf\Controller_Abstract {
 	public function init()
 	{
@@ -7,8 +8,7 @@ class IndexController extends \Yaf\Controller_Abstract {
 
 	public function indexAction()
 	{
-		$db  = Db();
-		$res = $db->get('zs_login',10);
-		echo json_encode($res);
+		$res = Db::table('zs_user')->find();
+		dump($res);die;
 	}
 }

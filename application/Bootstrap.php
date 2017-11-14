@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 所有在Bootstrap类中, 以_init开头的方法, 都会被Ap调用,
  * 这些方法, 都接受一个参数:Yaf_Dispatcher $dispatcher
@@ -26,15 +25,10 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract{
 		$dispatcher->registerPlugin($AutoloadPlugin);
 	}
 
-	public function _initDb()
-	{
-		$config  = $this->config->database->config;
-		new \Db\MysqliDb($config->host, $config->user, $config->pwd, $config->name);
-	}
-
 	public function _initBase()
 	{
 		// 环境常量
+		defined('DEBUG') or define('DEBUG', false);
 		defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 		define('IS_CGI', strpos(PHP_SAPI, 'cgi') === 0 ? 1 : 0);
 		define('IS_WIN', strstr(PHP_OS, 'WIN') ? 1 : 0);
@@ -49,7 +43,7 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract{
 		define('IS_DELETE', REQUEST_METHOD == 'DELETE' ? true : false);
 	}
 
-	function myErrorHandler($errno, $errstr, $errfile, $errline)
+	function myErrorHandler($errno, $errstr, $errfile, $errline, $errcontext)
 	{
 		//可记录日志
 		switch ($errno) {
@@ -60,7 +54,7 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract{
 			break;
 
 			default:
-				echo "Unknown error type: [$errno] $errstr<br />\n";
+				//echo "Unknown error type: [$errno]--- $errstr ---$errfile ---- $errline  <br />\n";
 			break;
 		}
 		return true;  //继续执行可执行的代码

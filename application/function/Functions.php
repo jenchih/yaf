@@ -1,9 +1,9 @@
 <?php
 
-function Db()
-{
-	return Db\MysqliDb::getInstance();
-}
+// function Db()
+// {
+// 	return Db\MysqliDb::getInstance();
+// }
 
 /**
  * @desc   格式化输出
@@ -12,27 +12,27 @@ function Db()
  */
 function dump($var, $echo = true, $label = null)
 {
-    $label = (null === $label) ? '' : rtrim($label) . ':';
-    ob_start();
-    var_dump($var);
-    $output = ob_get_clean();
-    $output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
-    if (IS_CLI) {
-        $output = PHP_EOL . $label . $output . PHP_EOL;
-    } else {
-    	header('content-type:text/html;charset=utf-8');
-    	echo "<pre style='font-size:18px;'>";
-        if (!extension_loaded('xdebug')) {
-            $output = htmlspecialchars($output, ENT_QUOTES);
-        }
-        $output = '<pre>' . $label . $output . '</pre>';
-    }
-    if ($echo) {
-        echo ($output);
-        return null;
-    } else {
-        return $output;
-    }
+	$label = (null === $label) ? '' : rtrim($label) . ':';
+	ob_start();
+	var_dump($var);
+	$output = ob_get_clean();
+	$output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
+	if (IS_CLI) {
+		$output = PHP_EOL . $label . $output . PHP_EOL;
+	} else {
+		header('content-type:text/html;charset=utf-8');
+		echo "<pre style='font-size:18px;'>";
+		if (!extension_loaded('xdebug')) {
+			$output = htmlspecialchars($output, ENT_QUOTES);
+		}
+		$output = '<pre>' . $label . $output . '</pre>';
+	}
+	if ($echo) {
+		echo ($output);
+		return null;
+	} else {
+		return $output;
+	}
 }
 
 /**
@@ -229,47 +229,131 @@ function genUuid(){
 
 function getHttpStatusCode($num)
 {
-    $httpStatusCodes = array(
-        100 => "HTTP/1.1 100 Continue",
-        101 => "HTTP/1.1 101 Switching Protocols",
-        200 => "HTTP/1.1 200 OK",
-        201 => "HTTP/1.1 201 Created",
-        202 => "HTTP/1.1 202 Accepted",
-        203 => "HTTP/1.1 203 Non-Authoritative Information",
-        204 => "HTTP/1.1 204 No Content",
-        205 => "HTTP/1.1 205 Reset Content",
-        206 => "HTTP/1.1 206 Partial Content",
-        300 => "HTTP/1.1 300 Multiple Choices",
-        301 => "HTTP/1.1 301 Moved Permanently",
-        302 => "HTTP/1.1 302 Found",
-        303 => "HTTP/1.1 303 See Other",
-        304 => "HTTP/1.1 304 Not Modified",
-        305 => "HTTP/1.1 305 Use Proxy",
-        307 => "HTTP/1.1 307 Temporary Redirect",
-        400 => "HTTP/1.1 400 Bad Request",
-        401 => "HTTP/1.1 401 Unauthorized",
-        402 => "HTTP/1.1 402 Payment Required",
-        403 => "HTTP/1.1 403 Forbidden",
-        404 => "HTTP/1.1 404 Not Found",
-        405 => "HTTP/1.1 405 Method Not Allowed",
-        406 => "HTTP/1.1 406 Not Acceptable",
-        407 => "HTTP/1.1 407 Proxy Authentication Required",
-        408 => "HTTP/1.1 408 Request Time-out",
-        409 => "HTTP/1.1 409 Conflict",
-        410 => "HTTP/1.1 410 Gone",
-        411 => "HTTP/1.1 411 Length Required",
-        412 => "HTTP/1.1 412 Precondition Failed",
-        413 => "HTTP/1.1 413 Request Entity Too Large",
-        414 => "HTTP/1.1 414 Request-URI Too Large",
-        415 => "HTTP/1.1 415 Unsupported Media Type",
-        416 => "HTTP/1.1 416 Requested range not satisfiable",
-        417 => "HTTP/1.1 417 Expectation Failed",
-        500 => "HTTP/1.1 500 Internal Server Error",
-        501 => "HTTP/1.1 501 Not Implemented",
-        502 => "HTTP/1.1 502 Bad Gateway",
-        503 => "HTTP/1.1 503 Service Unavailable",
-        504 => "HTTP/1.1 504 Gateway Time-out"
-    );
+	$httpStatusCodes = array(
+		100 => "HTTP/1.1 100 Continue",
+		101 => "HTTP/1.1 101 Switching Protocols",
+		200 => "HTTP/1.1 200 OK",
+		201 => "HTTP/1.1 201 Created",
+		202 => "HTTP/1.1 202 Accepted",
+		203 => "HTTP/1.1 203 Non-Authoritative Information",
+		204 => "HTTP/1.1 204 No Content",
+		205 => "HTTP/1.1 205 Reset Content",
+		206 => "HTTP/1.1 206 Partial Content",
+		300 => "HTTP/1.1 300 Multiple Choices",
+		301 => "HTTP/1.1 301 Moved Permanently",
+		302 => "HTTP/1.1 302 Found",
+		303 => "HTTP/1.1 303 See Other",
+		304 => "HTTP/1.1 304 Not Modified",
+		305 => "HTTP/1.1 305 Use Proxy",
+		307 => "HTTP/1.1 307 Temporary Redirect",
+		400 => "HTTP/1.1 400 Bad Request",
+		401 => "HTTP/1.1 401 Unauthorized",
+		402 => "HTTP/1.1 402 Payment Required",
+		403 => "HTTP/1.1 403 Forbidden",
+		404 => "HTTP/1.1 404 Not Found",
+		405 => "HTTP/1.1 405 Method Not Allowed",
+		406 => "HTTP/1.1 406 Not Acceptable",
+		407 => "HTTP/1.1 407 Proxy Authentication Required",
+		408 => "HTTP/1.1 408 Request Time-out",
+		409 => "HTTP/1.1 409 Conflict",
+		410 => "HTTP/1.1 410 Gone",
+		411 => "HTTP/1.1 411 Length Required",
+		412 => "HTTP/1.1 412 Precondition Failed",
+		413 => "HTTP/1.1 413 Request Entity Too Large",
+		414 => "HTTP/1.1 414 Request-URI Too Large",
+		415 => "HTTP/1.1 415 Unsupported Media Type",
+		416 => "HTTP/1.1 416 Requested range not satisfiable",
+		417 => "HTTP/1.1 417 Expectation Failed",
+		500 => "HTTP/1.1 500 Internal Server Error",
+		501 => "HTTP/1.1 501 Not Implemented",
+		502 => "HTTP/1.1 502 Bad Gateway",
+		503 => "HTTP/1.1 503 Service Unavailable",
+		504 => "HTTP/1.1 504 Gateway Time-out"
+	);
 
-    return isset($httpStatusCodes[$num]) ? $httpStatusCodes[$num] : '';
+	return isset($httpStatusCodes[$num]) ? $httpStatusCodes[$num] : '';
+}
+
+
+function request()
+{
+	return think\Request::instance();
+}
+/**
+ * 获取输入数据 支持默认值和过滤
+ * @param string    $key 获取的变量名
+ * @param mixed     $default 默认值
+ * @param string    $filter 过滤方法
+ * @return mixed
+ */
+function input($key = '', $default = null, $filter = '')
+{
+	if (0 === strpos($key, '?')) {
+		$key = substr($key, 1);
+		$has = true;
+	}
+	if ($pos = strpos($key, '.')) {
+		// 指定参数来源
+		list($method, $key) = explode('.', $key, 2);
+		if (!in_array($method, ['get', 'post', 'put', 'patch', 'delete', 'route', 'param', 'request', 'session', 'cookie', 'server', 'env', 'path', 'file'])) {
+			$key    = $method . '.' . $key;
+			$method = 'param';
+		}
+	} else {
+		// 默认为自动判断
+		$method = 'param';
+	}
+	if (isset($has)) {
+		return request()->has($key, $method, $default);
+	} else {
+		return request()->$method($key, $default, $filter);
+	}
+}
+
+function session($name, $value = '', $prefix = null)
+{
+	if (is_array($name)) {
+		// 初始化
+		think\Session::init($name);
+	} elseif (is_null($name)) {
+		// 清除
+		think\Session::clear('' === $value ? null : $value);
+	} elseif ('' === $value) {
+		// 判断或获取
+		return 0 === strpos($name, '?') ? think\Session::has(substr($name, 1), $prefix) : think\Session::get($name, $prefix);
+	} elseif (is_null($value)) {
+		// 删除
+		return think\Session::delete($name, $prefix);
+	} else {
+		// 设置
+		return think\Session::set($name, $value, $prefix);
+	}
+}
+
+/**
+ * 记录时间（微秒）和内存使用情况
+ * @param string            $start 开始标签
+ * @param string            $end 结束标签
+ * @param integer|string    $dec 小数位 如果是m 表示统计内存占用
+ * @return mixed
+ */
+function debug($start, $end = '', $dec = 6)
+{
+    if ('' == $end) {
+        think\Debug::remark($start);
+    } else {
+        return 'm' == $dec ? think\Debug::getRangeMem($start, $end) : think\Debug::getRangeTime($start, $end, $dec);
+    }
+}
+
+/**
+  * 生成表单令牌
+ * @param string $name 令牌名称
+ * @param mixed  $type 令牌生成方法
+ * @return string
+ */
+function token($name = '__token__', $type = 'md5')
+{
+    $token = think\Request::instance()->token($name, $type);
+    return '<input type="hidden" name="' . $name . '" value="' . $token . '" />';
 }
