@@ -5,6 +5,6 @@ class FooModel
 {
 	public function test()
 	{
-		return 'test';
+		return 'this is foo model test';
 	}
 }

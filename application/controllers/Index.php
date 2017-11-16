@@ -8,7 +8,16 @@ class IndexController extends \Yaf\Controller_Abstract {
 
 	public function indexAction()
 	{
-		$res = Db::table('zs_user')->find();
-		dump($res);die;
+		echo json_encode(['name'=>'leslie']);
+		return false;
+		// $this->getView()->assign("foo", "bar");
+		// $this->getView()->display();
+	}
+
+	public function testviewAction()
+	{
+		echo 2222;
+		//默认自动渲染视图，可以设置，或者关闭，若开启，又不想渲染视图输出，则return false
+		return false;
 	}
 }

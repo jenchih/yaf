@@ -20,7 +20,6 @@ class AutoloadPlugin extends Yaf\Plugin_Abstract {
 				}  
 			}
 		}
-		$this->fileload->setLibraryPath(APPLICATION_PATH.'/library',true);
 	}  
 //路由结束之后触发，此时路由一定正确完成, 否则这个事件不会触发  
 	public function routerShutdown(Yaf\Request_Abstract $request, Yaf\Response_Abstract $response) {
@@ -34,6 +33,7 @@ class AutoloadPlugin extends Yaf\Plugin_Abstract {
 				}  
 			}
 		}
+
 		$this->fileload->setLibraryPath(APPLICATION_PATH.'/library',true);
 	}  
 	private function getlist($dir_str,$type)
