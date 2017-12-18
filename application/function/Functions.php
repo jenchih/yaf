@@ -1,10 +1,4 @@
 <?php
-
-// function Db()
-// {
-// 	return Db\MysqliDb::getInstance();
-// }
-
 /**
  * @desc   格式化输出
  * @author rzliao

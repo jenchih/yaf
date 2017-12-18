@@ -54,3 +54,10 @@ session.auto_start = true
 session.host = '127.0.0.1'
 session.port = 6379
 session.password   = 'pwd'
+
+;websocketserver配置
+websocketserver.host = '0.0.0.0'
+websocketserver.port = 9999'
+websocketserver.ishttps = false
+websocketserver.ssl_cert_file = 'ssl_cert_file'
+websocketserver.ssl_key_file = 'ssl_key_file'

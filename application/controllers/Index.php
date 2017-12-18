@@ -8,6 +8,7 @@ class IndexController extends \Yaf\Controller_Abstract {
 
 	public function indexAction()
 	{
+		$data = Db::table('user')->find();
 		echo json_encode(['name'=>'leslie']);
 		return false;
 		// $this->getView()->assign("foo", "bar");
