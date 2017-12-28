@@ -39,7 +39,7 @@ class HttpServer
 
 		if( isset( $request->get ) ) $_GET = $request->get;
 		if( isset( $request->post ) ) $_POST = $request->post;
-		if( isset( $request->cookie ) ) $_COOKIE = $request->cookie
+		if( isset( $request->cookie ) ) $_COOKIE = $request->cookie;
 			
 		// $_FILES  = $request->files;
 		if( isset($_COOKIE['PHPSESSID']) ){
