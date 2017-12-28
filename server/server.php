@@ -8,7 +8,7 @@ class HttpServer
 	private $_isHTTPS = false;
 	public function __construct()
 	{
-		if( $_isHTTPS ){
+		if( $this->_isHTTPS ){
 			$serv = new swoole_http_server("0.0.0.0", $this->_port, SWOOLE_PROCESS, SWOOLE_SOCK_TCP | SWOOLE_SSL);
 			$serv->set([
 				'ssl_cert_file' => 'dir/ssl.crt',
