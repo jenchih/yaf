@@ -63,7 +63,7 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract{
 			case YAF\ERR\NOTFOUND\MODULE:
 			case YAF\ERR\NOTFOUND\ACTION:
 				// header("404 Not Found ");
-				echo "<h1>404 Not Found</h1>"
+				echo "<h1>404 Not Found</h1>";
 			break;
 			default:
 				echo "Unknown error type: [$errno]--- $errstr ---$errfile ---- $errline  <br />\n";
