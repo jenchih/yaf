@@ -53,9 +53,10 @@ class AutoloadPlugin extends Yaf\Plugin_Abstract {
 					{
 						if(is_file($dir_str.'/'.$filename))
 						{
+							$fname = pathinfo($filename);
+							if( $fname['extension'] != 'php' ) continue;
 							switch ($type) {
 								case 'class':
-									$fname=pathinfo($filename);
 									$this->fileload->autoload($fname['filename']);
 									break;
 								case 'function':

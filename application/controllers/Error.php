@@ -11,7 +11,6 @@ class ErrorController extends \Yaf\Controller_Abstract {
 			//这里可以捕获到应用内抛出的异常
 			echo $exception->getCode();
 			echo $exception->getMessage();
-			die;
 		}
 		switch ($exception->getCode()) {
 			case 404://404
@@ -22,10 +21,9 @@ class ErrorController extends \Yaf\Controller_Abstract {
 				header(getHttpStatusCode(404));
 				echo '404';
 				//dump($exception->getTrace());
-				exit();
 				break;
 			default :
-				// dump($exception->getTrace());
+				echo $exception->getMessage();
 				break;
 		}
 		throw $exception;

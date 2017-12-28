@@ -36,9 +36,11 @@ class HttpServer
 		$response->status('200');
 		$server  = $request->server;
 		$header  = $request->header;
-		$_GET    = $request->get;
-		$_POST   = $request->post;
-		$_COOKIE = $request->cookie;
+
+		if( isset( $request->get ) ) $_GET = $request->get;
+		if( isset( $request->post ) ) $_POST = $request->post;
+		if( isset( $request->cookie ) ) $_COOKIE = $request->cookie
+			
 		// $_FILES  = $request->files;
 		if( isset($_COOKIE['PHPSESSID']) ){
 			session_id($_COOKIE['PHPSESSID']);

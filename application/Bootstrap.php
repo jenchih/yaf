@@ -55,16 +55,16 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract{
 		define('IS_DELETE', REQUEST_METHOD == 'DELETE' ? true : false);
 	}
 
-	function myErrorHandler($errno, $errstr, $errfile, $errline, $errcontext)
+	public function myErrorHandler($errno, $errstr, $errfile, $errline, $errcontext)
 	{
 		//可记录日志
 		switch ($errno) {
 			case YAF\ERR\NOTFOUND\CONTROLLER:
 			case YAF\ERR\NOTFOUND\MODULE:
 			case YAF\ERR\NOTFOUND\ACTION:
-				header(" 404 Not Found");
+				// header("404 Not Found ");
+				echo "<h1>404 Not Found</h1>"
 			break;
-
 			default:
 				echo "Unknown error type: [$errno]--- $errstr ---$errfile ---- $errline  <br />\n";
 			break;
