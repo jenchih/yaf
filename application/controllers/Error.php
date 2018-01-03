@@ -3,7 +3,8 @@
 /**
  * 当有未捕获的异常, 则控制流会流到这里
  */
-class ErrorController extends \Yaf\Controller_Abstract {
+class ErrorController extends \Yaf\Controller_Abstract
+{
 
 	public function errorAction($exception)
 	{

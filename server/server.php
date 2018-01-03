@@ -3,6 +3,7 @@ class HttpServer
 {
 	public static $instance;
 	public $http;
+	private $response;
 	private $application;
 	private $_port = 9501;
 	private $_isHTTPS = false;
@@ -22,17 +23,18 @@ class HttpServer
 			'worker_num'    => 16,
 			'daemonize'     => true, //测试调试时，可关闭，来在客户端显示错误信息
 			'max_request'   => 10000,
-			'dispatch_mode' => 1
 		]);
 		define('APPLICATION_PATH', dirname(dirname(__DIR__)). "/yaf/application");
 		$this->application = new \Yaf\Application(APPLICATION_PATH."/../conf/application.ini");
 		$this->application->bootstrap();
 		$http->on('Request',array($this , 'onRequest'));
+		register_shutdown_function([$this, "shutdown"]);
 		$http->start();
 	}
 
 	public function onRequest($request, $response)
 	{
+		$this->response = $response;
 		$response->status('200');
 		$server  = $request->server;
 		$header  = $request->header;
@@ -61,6 +63,14 @@ class HttpServer
 		$result = ob_get_contents();//捕获运行中输出的数据
 		ob_end_clean();
 		$response->end($result);
+	}
+
+	public function shutdown()
+	{
+		ob_implicit_flush(0);
+		$data = ob_get_clean();
+		if( empty($data) ) $data = "<h1>500</h1>";
+		$this->response->end($data);
 	}
 
 	public static function getInstance() {

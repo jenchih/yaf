@@ -2,7 +2,8 @@
 /**
  *  websocket客户端调度方法控制器
  */
-class WebsocketController extends \Yaf\Controller_Abstract {
+class WebsocketController extends \Yaf\Controller_Abstract
+{
 
 	private $server;
 	private $fd;
