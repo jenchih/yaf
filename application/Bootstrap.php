@@ -11,7 +11,7 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract
 	{
 		$this->config = \Yaf\Application::app()->getConfig();
 		\Yaf\Registry::set("config", $this->config);
-		$dispatcher->returnResponse(true); // 开启后，不自动加载视图
+		$dispatcher->disableView();  //开启后，不自动加载视图
 		$dispatcher->catchException(true);  //开启异常捕获处理
 		$dispatcher->setErrorHandler([$this,"myErrorHandler"]);
 	}

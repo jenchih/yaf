@@ -4,7 +4,6 @@ class IndexController extends \Yaf\Controller_Abstract
 {
 	public function init()
 	{
-		\Yaf\Dispatcher::getInstance()->autoRender(false);
 	}
 
 	public function indexAction()
