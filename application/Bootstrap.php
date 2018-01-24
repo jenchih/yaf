@@ -12,7 +12,6 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract
 		$this->config = \Yaf\Application::app()->getConfig();
 		\Yaf\Registry::set("config", $this->config);
 		$dispatcher->disableView();  //开启后，不自动加载视图
-		$dispatcher->catchException(true);  //开启异常捕获处理
 		$dispatcher->setErrorHandler([$this,"myErrorHandler"]);
 	}
 
@@ -31,7 +30,7 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract
 		if(class_exists('\think\Db')){
 			\think\Db::setConfig($this->config->tpdatabase->toArray());
 			//Model关键字，手动加载文件
-			\Yaf\Loader::import($this->config->application->directory . '/library/think/Model.php'); 
+			\Yaf\Loader::import($this->config->application->directory . '/library/think/Model.php');
 		}
 	}
 
@@ -39,6 +38,7 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract
 	{
 		// 系统常量
 		defined('DS') or define('DS', DIRECTORY_SEPARATOR);
+		defined('APPDEBUG') or define('APPDEBUG', $this->config->application->appdebug);
 
 		// 环境常量
 		define('IS_CGI', strpos(PHP_SAPI, 'cgi') === 0 ? 1 : 0);
