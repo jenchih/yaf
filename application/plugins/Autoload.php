@@ -1,9 +1,6 @@
 <?php
-/**  
- * @author zqf 
- * Autoload.php 
- */  
-class AutoloadPlugin extends Yaf\Plugin_Abstract {  
+class AutoloadPlugin extends Yaf\Plugin_Abstract
+{  
 	//在路由之前触发，这个是7个事件中, 最早的一个. 但是一些全局自定的工作, 还是应该放在Bootstrap中去完成  
 	var $config;
 	var $fileload;
@@ -33,7 +30,6 @@ class AutoloadPlugin extends Yaf\Plugin_Abstract {
 				}  
 			}
 		}
-
 		$this->fileload->setLibraryPath(APPLICATION_PATH.'/library',true);
 	}  
 	private function getlist($dir_str,$type)
@@ -74,6 +70,4 @@ class AutoloadPlugin extends Yaf\Plugin_Abstract {
 			throw new Exception($e->getMessage());
 		}
 	}
-}  
-
-?>
+}

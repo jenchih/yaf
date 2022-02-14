@@ -4,6 +4,7 @@ class IndexController extends \Yaf\Controller_Abstract
 {
 	public function init()
 	{
+		\Yaf\Registry::set("session_prefix",'admin');
 	}
 
 	public function indexAction()

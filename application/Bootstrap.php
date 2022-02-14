@@ -19,6 +19,14 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract
 		Yaf\Session::getInstance()->start();
 	}
 
+	public function _initAuto(\Yaf\Dispatcher $dispatcher)
+	{
+		$fileload = Yaf\Loader::getInstance();
+		$fileload->import(__DIR__."/../vendor/autoload.php");
+		// $fileload->setLibraryPath(__DIR__."/../vendor",true);
+		// $fileload->autoload('autoload');
+	}
+
 	public function _initPlugin(\Yaf\Dispatcher $dispatcher)
 	{
 		$AutoloadPlugin = new AutoloadPlugin();
@@ -27,11 +35,14 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract
 	
 	public function _initDb()
 	{
-		if(class_exists('\think\Db')){
-			\think\Db::setConfig($this->config->tpdatabase->toArray());
-			//Model关键字，手动加载文件
-			\Yaf\Loader::import($this->config->application->directory . '/library/think/Model.php');
-		}
+		\think\facade\Db::setConfig([
+		    // 默认数据连接标识
+		    'default'     => 'mysql',
+		    // 数据库连接信息
+		    'connections' => [
+		        'mysql' => $this->config->tpdatabase->toArray()
+		    ],
+		]);
 	}
 
 	public function _initBase()

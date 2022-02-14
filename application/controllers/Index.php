@@ -1,18 +1,21 @@
 <?php
-use \think\Db;
+use \think\facade\Db;
 class IndexController extends \Yaf\Controller_Abstract
 {
 	public function init()
 	{
+		\Yaf\Registry::set("session_prefix",'index');
 		// print_r(get_defined_constants());die;
 	}
 
 	public function indexAction()
 	{
-		// $data = UserModel::get(['uid'=>64])->toArray();
-		$data = Db::table('zs_user')->find(52);
-		$this->assign("foo", $data['username']);
-		$this->display('index');
+		$aa= session('name');
+		dump($aa);die;
+		$data = Db::table('zs_user')->where('uid', 64)->find();
+		ajaxReturn($data);
+		// $this->assign("foo", 'leslie');
+		// $this->display('index');
 	}
 
 	public function testviewAction()

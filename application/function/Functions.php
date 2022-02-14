@@ -271,7 +271,7 @@ function getHttpStatusCode($num)
 
 function request()
 {
-	return think\Request::instance();
+	return \think\Request::instance();
 }
 /**
  * 获取输入数据 支持默认值和过滤
@@ -306,39 +306,24 @@ function input($key = '', $default = null, $filter = '')
 
 function session($name, $value = '', $prefix = null)
 {
-	if (is_array($name)) {
-		// 初始化
-		think\Session::init($name);
-	} elseif (is_null($name)) {
-		// 清除
-		think\Session::clear('' === $value ? null : $value);
-	} elseif ('' === $value) {
-		// 判断或获取
-		return 0 === strpos($name, '?') ? think\Session::has(substr($name, 1), $prefix) : think\Session::get($name, $prefix);
+	if( empty($prefix) )
+	{
+		$prefix = \Yaf\Registry::get("session_prefix")??'index';//不同模块下设置不同session
+	}
+	$session = Yaf\Session::getInstance();
+	$sesdata = $session->get('yafsession');
+	if ('' === $value) {
+		return $sesdata[$prefix][$name]??null;
 	} elseif (is_null($value)) {
-		// 删除
-		return think\Session::delete($name, $prefix);
+		unset($sesdata[$prefix][$name]);
+		$sesdata = $sesdata[$prefix];
+		$session->set('yafsession',$sesdata);
 	} else {
-		// 设置
-		return think\Session::set($name, $value, $prefix);
+		$sesdata[$prefix][$name] = $value;
+		$session->set('yafsession',$sesdata);
 	}
 }
 
-/**
- * 记录时间（微秒）和内存使用情况
- * @param string            $start 开始标签
- * @param string            $end 结束标签
- * @param integer|string    $dec 小数位 如果是m 表示统计内存占用
- * @return mixed
- */
-function debug($start, $end = '', $dec = 6)
-{
-    if ('' == $end) {
-        think\Debug::remark($start);
-    } else {
-        return 'm' == $dec ? think\Debug::getRangeMem($start, $end) : think\Debug::getRangeTime($start, $end, $dec);
-    }
-}
 
 /**
   * 生成表单令牌
@@ -350,4 +335,30 @@ function token($name = '__token__', $type = 'md5')
 {
     $token = think\Request::instance()->token($name, $type);
     return '<input type="hidden" name="' . $name . '" value="' . $token . '" />';
+}
+
+function ajaxReturn($data, $type='', $json_option=0)
+{
+    if(empty($type)) $type  = 'JSON';
+    switch (strtoupper($type)){
+        case 'JSON' :
+            // 返回JSON数据格式到客户端 包含状态信息
+            header('Content-Type:application/json; charset=utf-8');
+            exit(json_encode($data,$json_option));
+        case 'XML'  :
+            // 返回xml格式数据
+            header('Content-Type:text/xml; charset=utf-8');
+            exit(xml_encode($data));
+        case 'JSONP':
+            // 返回JSON数据格式到客户端 包含状态信息
+            header('Content-Type:application/json; charset=utf-8');
+            $handler  =   isset($_GET[C('VAR_JSONP_HANDLER')]) ? $_GET[C('VAR_JSONP_HANDLER')] : C('DEFAULT_JSONP_HANDLER');
+            exit($handler.'('.json_encode($data,$json_option).');');  
+        case 'EVAL' :
+            // 返回可执行的js脚本
+            header('Content-Type:text/html; charset=utf-8');
+            exit($data);            
+        default  :
+            //不做任何处理
+    }
 }
